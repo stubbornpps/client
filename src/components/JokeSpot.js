@@ -17,7 +17,7 @@ import { JokeFetch } from '../actions/Joke';
     },
     paper:{
         width:'230px',
-        height:'130px',
+        height:'160px',
         padding:'20px',
         textAlign:'center'
     },
@@ -44,10 +44,9 @@ function JokeSpot({classes,...props}) {
                      return(
                         <Grid item xs={12} sm={3} lg={3} className={classes.item} key={index} >
                             <Paper  className={classes.paper} >
-                                <div><Typography variant='p'>{joke.setup}</Typography></div>
-                                <br />
-                                <br />
-                                <div style={{marginBottom:'12px'}}><Typography variant='p' style={{fontWeight:'bold'}}>{joke.punchline}</Typography></div>
+                                <div style={{width:'100%',height:'50%'}}><Typography variant='p' style={{fontSize:'14px'}}>{joke.setup}</Typography></div>
+                                <br/>
+                                <div style={{width:'100%',height:'50%',marginBottom:'6px'}}><Typography variant='p' style={{fontWeight:'bold'}}>{joke.punchline}</Typography></div>
                             </Paper>
                         </Grid>  
                      )

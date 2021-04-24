@@ -17,3 +17,8 @@ export const Log = (user) =>{
         })
     }
 }
+export const Logout = () =>{
+    return async(dispatch)=>{     
+        dispatch({type:loginInConst.USER_LOGOUT_REQ})
+    }
+}

@@ -17,7 +17,7 @@ const Task = (state =initState , action) =>{
         case taskConst.REQUEST :           
             state={
                 ...state,                                
-                save_status:0,
+                save_status:0,                
                 task_one:[],
             }
             break;                    
@@ -39,20 +39,25 @@ const Task = (state =initState , action) =>{
                 task:state.task.filter(x=>x._id != action.payload)
             }
             break;                    
-        case taskConst.FETCH_ONE :                                           
+        case taskConst.FETCH_ONE :                                                       
             state={
-                ...state,            
+                ...state,   
+                save_status:0,
+                task:[],         
                 task_one:action.payload
             }
+            // console.log(state.task_one);
             break; 
             case taskConst.UPDATE:
                 state={
                     ...state,
+                    save_status:1,
                     task:state.task.map(x=>x._id==action.payload._id?action.payload:x)
                 }                   
         default :   
          state ={...state}
         }
+        console.log(state.task_one);
         return state        
 }
 

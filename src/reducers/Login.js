@@ -19,6 +19,13 @@ const Log = (state =initState , action) =>{
                 response:action.payload,                                
             }
             break;            
+        case loginInConst.USER_LOGOUT_REQ :                    
+            state={
+                ...state,                
+                success:false,                                
+                response:'',                                
+            }
+            break;            
         default :   
          state ={...state}
         }

@@ -46,23 +46,34 @@ function TaskForm({classes,...props}) {
     const location = useLocation();
     const init = {taskname:'',description:'',start:'',end:''};
     const [intask,setIntask] = useState(init);    
+    const [error,setError] = useState('');
     const dispatch = useDispatch();    
+    
     
     const taskSubmit =(e)=>{
         e.preventDefault();       
         if(location.pathname !="/add"){                  
             dispatch(Update(id,intask));
-        } else{
-            dispatch(Add(intask));    
+        } else{            
+            if(intask.taskname == '' || intask.description == '' || intask.start =='' || intask.end ==''){
+                setError({ helperText: 'Invalid format', error_status: true })                
+            }
+            if(intask.taskname != '' && intask.description != '' && intask.start !='' && intask.end !=''){
+                dispatch(Add(intask));    
+                setError('');
+            }
         }
     }
     useEffect(()=>{
         if(location.pathname !="/add"){                                   
-        dispatch(Get(id));                    
-            console.log(props.edit);
-            // console.log(props.edit);
+        dispatch(Get(id));                                                 
         }
     },[])
+    useEffect(()=>{
+        if(location.pathname !="/add"){                                                                        
+            setIntask(props.edit);
+        }
+    },[props.edit])
     useEffect(()=>{
         if(props.responseStatus ==1){               
             setTimeout(function() {
@@ -76,10 +87,16 @@ function TaskForm({classes,...props}) {
             <Container >
                 <Grid container>                
                     <Grid item xs={12} style={{textAlign:"center"}} >
-                        { location.pathname=="/add" ? (<h1>   Add Task     </h1>) :(<h1>   Edit Task     </h1>)  }                         
+                        { location.pathname=="/add" ? (<h1>   Add Task     </h1>) :(<h1>   Edit Task     </h1>)  }                                                 
+                                {
+                                    
+                                    error.error_status ? (<p style={{textAlign:'center',color:'red'}}>All field required *</p>) :('')
+                                }
                     </Grid>
                     <Grid item xs={12} style={{display:'flex',justifyContent:'center',alignItems:'center'}}  >
                     <div className={classes.paper}>                                                                                                
+                                
+                                
                         <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
@@ -178,10 +195,9 @@ function TaskForm({classes,...props}) {
         </>
     )
 }
-const mapStateToProps = (state) => (    
-    {
+const mapStateToProps = (state) => ({    
+    edit:state.Task.task_one,
     responseStatus:state.Task.save_status,
-    edit:state.Task.task_one
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(TaskForm)) 

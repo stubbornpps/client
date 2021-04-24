@@ -2,7 +2,8 @@ import React from 'react';
 import { AppBar, Typography , withStyles, Box, Button, recomposeColor } from '@material-ui/core';
 import { removeUserSession } from '../constant/Common';
 import {  Link,useLocation } from "react-router-dom";
-
+import { useDispatch, connect } from "react-redux";
+import {Logout} from '../actions/Login';
 
 const styles = theme =>({ 
     navbar:{
@@ -33,8 +34,11 @@ const styles = theme =>({
   })
 
 function Header({classes,...props}) {  
+    const dispatch =useDispatch();
     const logout = ()=>{
+        dispatch(Logout());
         removeUserSession();    
+        // console.log(props);
     }
     const location = useLocation();
     const buttonVariation = (pathname) =>{
@@ -42,7 +46,7 @@ function Header({classes,...props}) {
             return(
                 <div className={classes.asideClass}>   
                 {pathname !="/jokespot"?(<Link to="/jokespot"  style={{textDecoration:'none'}}><Button  className={classes.buttonLog}  variant="outlined"  >JokeSpot</Button></Link> ):(<Link to="/dash"  style={{textDecoration:'none'}}><Button  className={classes.buttonLog}  variant="outlined"  >DashBoard</Button></Link>) }       
-            <Link to="/login"  style={{textDecoration:'none'}}><Button  className={classes.buttonLog}  variant="outlined" onClick={logout} >
+            <Link style={{textDecoration:'none'}}><Button  className={classes.buttonLog}  variant="outlined" onClick={logout} >
                Log Out
             </Button></Link> </div> )
         }        

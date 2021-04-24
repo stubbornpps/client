@@ -48,7 +48,8 @@ export const Get = (id) =>{
     return async(dispatch)=>{                  
         dispatch({type:taskConst.REQUEST});                             
         await axios.get(`/getone/${id}`)
-        .then(res=>{                                 
+        .then(res=>{     
+            console.log(res.data)                            ;
                  dispatch({type:taskConst.FETCH_ONE,                    
                      payload:res.data
                  });                   

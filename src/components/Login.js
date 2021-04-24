@@ -10,7 +10,6 @@ import {
     CssBaseline,
     InputBase
   } from "@material-ui/core";  
-import Header from "./Header";
 import { useDispatch, connect } from "react-redux";
 import {Log} from '../actions/Login';
 const styles = (theme) => ({
@@ -59,18 +58,25 @@ const styles = (theme) => ({
     }    
 });
 function Login({ classes, ...props}) {
-                    
-    
+                        
     const dispatch = useDispatch();
     const intialState ={
         email:'',
         password:''
     };    
     const [user,setUser] = useState(intialState);
+    const [error,setError] = useState('');
     
     const submitLoginIn = (e)=>{
         e.preventDefault();        
-        dispatch(Log(user));               
+        if(user.email == '' || user.password == ''){
+            setError({ helperText: 'Invalid format', error_status: true })
+            
+        }        
+        if(user.password != '' && user.email != ''){
+            dispatch(Log(user));                           
+            setError('');
+        }
     }     
     useEffect(()=>{                            
         if(props.responseLog.success && getToken() == null){      
@@ -89,6 +95,10 @@ function Login({ classes, ...props}) {
                                 <Typography component="h1" variant="h2" style={{color:'white', letterSpacing:'2px'}} gutterBottom>
                                     Welcome
                                 </Typography>
+                                {
+                                    error.error_status ? (<p style={{textAlign:'center',color:'red'}}>All field required *</p>) :('')
+                                }
+                                
                             </div>
                             <div>      
                             <form>                            
@@ -101,7 +111,7 @@ function Login({ classes, ...props}) {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            type='text'
+                            type='text'                            
                             placeholder='Enter Your Email'
                             className={classes.textinput}
                             classes={{

@@ -1,6 +1,8 @@
 export const loginInConst = {
     USER_LOGIN_SUCCESS:'USER_LOGIN_SUCCESS'           ,
-    USER_LOGIN_REQ:'USER_LOGIN_REQ'
+    USER_LOGIN_REQ:'USER_LOGIN_REQ',
+    USER_LOGOUT_REQ:'USER_LOGOUT_REQ'
+
 }
 export const jokeConst ={
     JOKE_SUCCESS:'JOKE_SUCCESS' ,
